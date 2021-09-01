@@ -1,4 +1,4 @@
-package Seksjon113;
+package UkesOppgaver1.Seksjon113;
 
 public class Oppgave5 {
 

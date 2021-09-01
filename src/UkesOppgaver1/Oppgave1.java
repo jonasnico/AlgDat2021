@@ -1,4 +1,4 @@
-package Seksjon112;
+package UkesOppgaver1;
 
 //1.	Anta at vi har en min-metode, dvs. en metode som finner (og returnerer) posisjonen til den minste verdien i
 //      en tabell. Hva ville metodekallet min(a) returnere med hvis a er tabellen i Figur 1.1.2?

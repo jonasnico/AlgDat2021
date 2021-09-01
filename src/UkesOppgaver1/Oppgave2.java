@@ -1,4 +1,4 @@
-package Seksjon112;
+package UkesOppgaver1;
 
 public class Oppgave2 {
 
