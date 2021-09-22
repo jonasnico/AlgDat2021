@@ -8,17 +8,6 @@ public class Tabell     // Samleklasse for tabellmetoder
 {
     private Tabell() {}   // privat standardkonstruktør - hindrer instansiering
 
-    public static void main(String[] args) {
-        char [] c = {'a', 'b', 'c', 'd', 'e', 3, 't', 24, 'æ', 'l', 19};
-        int [] a = {5,9,2,4,0,12,23,3,6,8};
-
-
-
-
-        skriv(heleTall(10,9));
-
-
-    }
 
     public static void fratilKontroll(int tablengde, int fra, int til)
     {
@@ -76,6 +65,7 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     public static void skriv(int[] a, int fra, int til) {
 
+        fratilKontroll(a.length, fra, til);
         if (til - fra > 0) System.out.print(a[fra]);
         for (int i = fra + 1; i < til; i++) {
             System.out.print(" " + a[i]);
@@ -103,18 +93,17 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     public static void skrivLn(int[] a) {
 
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(a[i] + " ");
-        }
-        System.out.println();
+        skrivLn(a, 0, a.length);
     }
 
     // Metoden public static void skriv(char[] c, int fra, int til)
 
     public static void skriv(char[] c, int fra, int til) {
 
-        for (int i = fra; i < til; i++) {
-            System.out.print(c[i] + " ");
+        fratilKontroll(c.length, fra, til);
+        if (til - fra > 0) System.out.print(c[fra]);
+        for (int i = fra + 1; i < til; i++) {
+            System.out.print(" " + c[i]);
         }
     }
 
@@ -122,19 +111,16 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     public static void skriv(char[] c) {
 
-        for (int i = 0; i < c.length; i++) {
-            System.out.print(c[i] + " ");
+        skriv(c, 0, c.length);
+
         }
-    }
+
 
     // Metoden public static void skrivLn(char [] c, int fra, int til)
 
     public static void skrivLn(char[] c, int fra, int til) {
 
-        for (int i = fra; i < til; i++) {
-            System.out.print(c[i] + " ");
-
-        }
+        skriv(c, fra, til);
         System.out.println();
     }
 
@@ -142,10 +128,7 @@ public class Tabell     // Samleklasse for tabellmetoder
 
     public static void skrivLn(char[] c) {
 
-        for (int i = 0; i < c.length; i++) {
-            System.out.print(c[i] + " ");
-        }
-        System.out.println();
+        skrivLn(c, 0, c.length);
     }
 
     // Metoden randPerm(int n)                   Programkode 1.1.8 e)
@@ -208,6 +191,56 @@ public class Tabell     // Samleklasse for tabellmetoder
     {
         return maks(a,0,a.length);     // kaller metoden over
     }
+
+    public static int[] nestMaks(int[] a)  // legges i class Tabell
+    {
+        int n = a.length;   // tabellens lengde
+
+        if (n < 2) throw   // må ha minst to verdier!
+                new java.util.NoSuchElementException("a.length(" + n + ") < 2!");
+
+        int m = maks(a);  // m er posisjonen til tabellens største verdi
+
+        int nm;           // nm skal inneholde posisjonen til nest største verdi
+
+        if (m == 0)                            // den største ligger først
+        {
+            nm = maks(a, 1, n);                  // leter i a[1:n>
+        }
+        else if (m == n - 1)                   // den største ligger bakerst
+        {
+            nm = maks(a, 0, n - 1);              // leter i a[0:n-1>
+        }
+        else
+        {
+            int mv = maks(a, 0, m);              // leter i a[0:m>
+            int mh = maks(a, m + 1, n);          // leter i a[m+1:n>
+            nm = a[mh] > a[mv] ? mh : mv;        // hvem er størst?
+        }
+
+        return new int[] {m,nm};      // m i posisjon 0 , nm i posisjon 1
+
+    } // nestMaks
+
+    public static int[] nestMaksBytt(int[] a)  // legges i class Tabell
+    {
+
+        if (a.length < 2) throw   // må ha minst to verdier!
+                new IllegalArgumentException("a.length(" + a.length + ") < 2!");
+
+        int m = maks(a);  // m er posisjonen til tabellens største verdi
+
+        bytt(a, 0, m); // bytter om slik at den største kommer forrest
+
+        int k = maks(a, 1, a.length);
+
+        if (k == m) k = 0; // den nest største lå opprinnelig forrest
+
+        bytt(a, 0, m); // bytter tilbake
+
+        return new int[] {m,k};      // m i posisjon 0 , nm i posisjon 1
+
+    } // nestMaks
 
     // min-metodene - se Oppgave 1 i Avsnitt 1.2.1
     public static int min(int[] a, int fra, int til)
